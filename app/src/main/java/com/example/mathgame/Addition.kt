@@ -1,0 +1,92 @@
+package com.example.mathgame
+
+import android.widget.Button
+import android.widget.TextView
+
+class Addition(
+    private val table: Int,
+    private val timer: Int, private val equation: TextView, private val option1: Button,
+    private val option2: Button, private val option3: Button,
+    private val option4: Button
+) {
+
+    private var timerIsStarted = false
+    private var numbers: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+    private var score = 0
+
+    fun showQuestion() {
+        if (timer != 0 && !timerIsStarted) {
+            timerIsStarted = true
+            // TODO start timer
+        }
+        if (numbers.size == 0) {
+            //TODO start the new activity
+            println("finish")
+            return
+        }
+        val number = numbers[(0 until numbers.size).random()]
+        println(numbers.size)
+        numbers.remove(number)
+
+        val question = "$number + $table"
+        equation.text = question
+        val answer = number + table
+
+        val random = (0..3).random()
+        when (random) {
+            0 -> {
+                option1.text = (answer).toString()
+                option2.text = (answer + 1).toString()
+                option3.text = (answer - 1).toString()
+                option4.text = (answer + 2).toString()
+
+                option1.setOnClickListener { rightAnswer() }
+                option2.setOnClickListener { wrongAnswer() }
+                option3.setOnClickListener { wrongAnswer() }
+                option4.setOnClickListener { wrongAnswer() }
+            }
+            1 -> {
+                option1.text = (answer + 1).toString()
+                option2.text = (answer).toString()
+                option3.text = (answer - 1).toString()
+                option4.text = (answer + 2).toString()
+
+                option1.setOnClickListener { wrongAnswer() }
+                option2.setOnClickListener { rightAnswer() }
+                option3.setOnClickListener { wrongAnswer() }
+                option4.setOnClickListener { wrongAnswer() }
+            }
+            2 -> {
+                option1.text = (answer - 1).toString()
+                option2.text = (answer + 1).toString()
+                option3.text = (answer).toString()
+                option4.text = (answer + 2).toString()
+
+                option1.setOnClickListener { wrongAnswer() }
+                option2.setOnClickListener { wrongAnswer() }
+                option3.setOnClickListener { rightAnswer() }
+                option4.setOnClickListener { wrongAnswer() }
+            }
+            3 -> {
+                option1.text = (answer + 2).toString()
+                option2.text = (answer + 1).toString()
+                option3.text = (answer - 1).toString()
+                option4.text = (answer).toString()
+
+                option1.setOnClickListener { wrongAnswer() }
+                option2.setOnClickListener { wrongAnswer() }
+                option3.setOnClickListener { wrongAnswer() }
+                option4.setOnClickListener { rightAnswer() }
+            }
+        }
+    }
+    private fun rightAnswer() {
+        score++
+        // Make sound
+        showQuestion()
+    }
+    private fun wrongAnswer() {
+        //make sound
+        showQuestion()
+    }
+}

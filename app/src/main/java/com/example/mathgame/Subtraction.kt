@@ -17,7 +17,7 @@ class Subtraction(
     fun showQuestion() {
         if (timer != 0 && !timerIsStarted) {
             timerIsStarted = true
-            // TODO start timer
+            // TODO start timerd
         }
         if (numbers.size == 0) {
             //TODO start the new activity

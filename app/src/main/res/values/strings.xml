@@ -2,10 +2,10 @@
     <string name="app_name">MathGame</string>
 
     <string name="main_page_title">Choose a game mode</string>
-    <string name="mode1">Addition</string>
-    <string name="mode2">Subtraction</string>
-    <string name="mode3">Multiplication</string>
-    <string name="mode4">Division</string>
+    <string name="mode1">Addition(+)</string>
+    <string name="mode2">Subtraction(-)</string>
+    <string name="mode3">Multiplication(×)</string>
+    <string name="mode4">Division(÷)</string>
 
     <string-array name="tables">
         <item>1</item>

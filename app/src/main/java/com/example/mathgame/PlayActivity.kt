@@ -19,7 +19,7 @@ class PlayActivity : AppCompatActivity() {
         val option4 = findViewById<Button>(R.id.option4)
         println(mode)
         if (mode == 1)
-            Addition(table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()
+            Addition(this, table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()
 
         else if (mode == 2)
             Subtraction(this, table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()

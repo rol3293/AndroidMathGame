@@ -1,9 +1,12 @@
 package com.example.mathgame
 
+import android.content.Context
+import android.content.Intent
 import android.widget.Button
 import android.widget.TextView
 
 class Addition(
+    private val context: Context,
     private val table: Int,
     private val timer: Int, private val equation: TextView, private val option1: Button,
     private val option2: Button, private val option3: Button,
@@ -13,6 +16,8 @@ class Addition(
     private var timerIsStarted = false
     private var numbers: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     private var score = 0
+    private var wrong: MutableList<String> = mutableListOf()
+    private var answeredQuestions = 0
 
     fun showQuestion() {
         if (timer != 0 && !timerIsStarted) {
@@ -21,7 +26,8 @@ class Addition(
         }
         if (numbers.size == 0) {
             //TODO start the new activity
-            println("finish")
+            disableButtons()
+            showResults()
             return
         }
         val number = numbers[(0 until numbers.size).random()]
@@ -80,12 +86,30 @@ class Addition(
             }
         }
     }
+    private fun showResults() {
+        val intent = Intent(context, ResultActivity::class.java).apply {
+            putExtra("wrong", wrong as ArrayList<String>)
+            putExtra("table", table)
+            putExtra("mode", 1)
+        }
+        context.startActivity(intent)
+    }
+
+    private fun disableButtons() {
+        option1.isEnabled = false
+        option2.isEnabled = false
+        option3.isEnabled = false
+        option4.isEnabled = false
+    }
     private fun rightAnswer() {
         score++
+        answeredQuestions++
         // Make sound
         showQuestion()
     }
     private fun wrongAnswer() {
+        answeredQuestions++
+        wrong.add(equation.text as String)
         //make sound
         showQuestion()
     }

@@ -1,11 +1,12 @@
-package com.example.mathgame
+package com.example.mathgame.modes
 
 import android.content.Context
 import android.content.Intent
 import android.widget.Button
 import android.widget.TextView
+import com.example.mathgame.ResultActivity
 
-class Multiplication (
+class Addition(
     private val context: Context,
     private val table: Int,
     private val timer: Int,
@@ -15,6 +16,7 @@ class Multiplication (
     private val option3: Button,
     private val option4: Button
 ) {
+
     private var timerIsStarted = false
     private var numbers: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     private var score = 0
@@ -22,28 +24,24 @@ class Multiplication (
     private var answeredQuestions = 0
 
     fun showQuestion() {
-        // if theres is a timer or the timer isn't started, start it
         if (timer != 0 && !timerIsStarted) {
             timerIsStarted = true
             // TODO start timer
         }
-        // if showed all 12 question
         if (numbers.size == 0) {
-            // TODO start the new activity
+            //TODO start the new activity
             disableButtons()
             showResults()
             return
         }
-        // get a random number
         val number = numbers[(0 until numbers.size).random()]
+        println(numbers.size)
         numbers.remove(number)
 
-        // create question
-        val question = "$number × $table"
-        val answer = number * table
+        val question = "$number + $table"
         equation.text = question
+        val answer = number + table
 
-        // set the onclick of button and choose the button with the answer
         val random = (0..3).random()
         when (random) {
             0 -> {
@@ -92,12 +90,11 @@ class Multiplication (
             }
         }
     }
-
     private fun showResults() {
         val intent = Intent(context, ResultActivity::class.java).apply {
             putExtra("wrong", wrong as ArrayList<String>)
             putExtra("table", table)
-            putExtra("mode", 2)
+            putExtra("mode", 1)
         }
         context.startActivity(intent)
     }
@@ -108,7 +105,6 @@ class Multiplication (
         option3.isEnabled = false
         option4.isEnabled = false
     }
-
     private fun rightAnswer() {
         score++
         answeredQuestions++
@@ -116,10 +112,9 @@ class Multiplication (
         showQuestion()
     }
     private fun wrongAnswer() {
-        // Make sound
         answeredQuestions++
         wrong.add(equation.text as String)
+        //make sound
         showQuestion()
     }
 }
-

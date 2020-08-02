@@ -1,11 +1,12 @@
-package com.example.mathgame
+package com.example.mathgame.modes
 
 import android.content.Context
 import android.content.Intent
 import android.widget.Button
 import android.widget.TextView
+import com.example.mathgame.ResultActivity
 
-class Addition(
+class Subtraction (
     private val context: Context,
     private val table: Int,
     private val timer: Int,
@@ -23,31 +24,35 @@ class Addition(
     private var answeredQuestions = 0
 
     fun showQuestion() {
+        // if theres is a timer or the timer isn't started, start it
         if (timer != 0 && !timerIsStarted) {
             timerIsStarted = true
             // TODO start timer
         }
+        // if showed all 12 question
         if (numbers.size == 0) {
-            //TODO start the new activity
+            // TODO start the new activity
             disableButtons()
             showResults()
             return
         }
+        // get a random number
         val number = numbers[(0 until numbers.size).random()]
-        println(numbers.size)
         numbers.remove(number)
 
-        val question = "$number + $table"
+        // create question
+        val r = table + number
+        val question = "$r - $table"
         equation.text = question
-        val answer = number + table
 
+        // set the onclick of button and choose the button with the answer
         val random = (0..3).random()
         when (random) {
             0 -> {
-                option1.text = (answer).toString()
-                option2.text = (answer + 1).toString()
-                option3.text = (answer - 1).toString()
-                option4.text = (answer + 2).toString()
+                option1.text = (number).toString()
+                option2.text = (number + 1).toString()
+                option3.text = (number - 1).toString()
+                option4.text = (number + 2).toString()
 
                 option1.setOnClickListener { rightAnswer() }
                 option2.setOnClickListener { wrongAnswer() }
@@ -55,10 +60,10 @@ class Addition(
                 option4.setOnClickListener { wrongAnswer() }
             }
             1 -> {
-                option1.text = (answer + 1).toString()
-                option2.text = (answer).toString()
-                option3.text = (answer - 1).toString()
-                option4.text = (answer + 2).toString()
+                option1.text = (number + 1).toString()
+                option2.text = (number).toString()
+                option3.text = (number - 1).toString()
+                option4.text = (number + 2).toString()
 
                 option1.setOnClickListener { wrongAnswer() }
                 option2.setOnClickListener { rightAnswer() }
@@ -66,10 +71,10 @@ class Addition(
                 option4.setOnClickListener { wrongAnswer() }
             }
             2 -> {
-                option1.text = (answer - 1).toString()
-                option2.text = (answer + 1).toString()
-                option3.text = (answer).toString()
-                option4.text = (answer + 2).toString()
+                option1.text = (number - 1).toString()
+                option2.text = (number + 1).toString()
+                option3.text = (number).toString()
+                option4.text = (number + 2).toString()
 
                 option1.setOnClickListener { wrongAnswer() }
                 option2.setOnClickListener { wrongAnswer() }
@@ -77,10 +82,10 @@ class Addition(
                 option4.setOnClickListener { wrongAnswer() }
             }
             3 -> {
-                option1.text = (answer + 2).toString()
-                option2.text = (answer + 1).toString()
-                option3.text = (answer - 1).toString()
-                option4.text = (answer).toString()
+                option1.text = (number + 2).toString()
+                option2.text = (number + 1).toString()
+                option3.text = (number - 1).toString()
+                option4.text = (number).toString()
 
                 option1.setOnClickListener { wrongAnswer() }
                 option2.setOnClickListener { wrongAnswer() }
@@ -89,11 +94,12 @@ class Addition(
             }
         }
     }
+
     private fun showResults() {
         val intent = Intent(context, ResultActivity::class.java).apply {
             putExtra("wrong", wrong as ArrayList<String>)
             putExtra("table", table)
-            putExtra("mode", 1)
+            putExtra("mode", 2)
         }
         context.startActivity(intent)
     }
@@ -104,6 +110,7 @@ class Addition(
         option3.isEnabled = false
         option4.isEnabled = false
     }
+
     private fun rightAnswer() {
         score++
         answeredQuestions++
@@ -111,9 +118,9 @@ class Addition(
         showQuestion()
     }
     private fun wrongAnswer() {
+        // Make sound
         answeredQuestions++
         wrong.add(equation.text as String)
-        //make sound
         showQuestion()
     }
 }

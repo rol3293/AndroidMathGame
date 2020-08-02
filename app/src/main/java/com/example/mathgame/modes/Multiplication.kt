@@ -1,11 +1,12 @@
-package com.example.mathgame
+package com.example.mathgame.modes
 
 import android.content.Context
 import android.content.Intent
 import android.widget.Button
 import android.widget.TextView
+import com.example.mathgame.ResultActivity
 
-class Subtraction (
+class Multiplication (
     private val context: Context,
     private val table: Int,
     private val timer: Int,
@@ -15,7 +16,6 @@ class Subtraction (
     private val option3: Button,
     private val option4: Button
 ) {
-
     private var timerIsStarted = false
     private var numbers: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     private var score = 0
@@ -40,18 +40,18 @@ class Subtraction (
         numbers.remove(number)
 
         // create question
-        val r = table + number
-        val question = "$r - $table"
+        val question = "$number × $table"
+        val answer = number * table
         equation.text = question
 
         // set the onclick of button and choose the button with the answer
         val random = (0..3).random()
         when (random) {
             0 -> {
-                option1.text = (number).toString()
-                option2.text = (number + 1).toString()
-                option3.text = (number - 1).toString()
-                option4.text = (number + 2).toString()
+                option1.text = (answer).toString()
+                option2.text = (answer + 1).toString()
+                option3.text = (answer - 1).toString()
+                option4.text = (answer + 2).toString()
 
                 option1.setOnClickListener { rightAnswer() }
                 option2.setOnClickListener { wrongAnswer() }
@@ -59,10 +59,10 @@ class Subtraction (
                 option4.setOnClickListener { wrongAnswer() }
             }
             1 -> {
-                option1.text = (number + 1).toString()
-                option2.text = (number).toString()
-                option3.text = (number - 1).toString()
-                option4.text = (number + 2).toString()
+                option1.text = (answer + 1).toString()
+                option2.text = (answer).toString()
+                option3.text = (answer - 1).toString()
+                option4.text = (answer + 2).toString()
 
                 option1.setOnClickListener { wrongAnswer() }
                 option2.setOnClickListener { rightAnswer() }
@@ -70,10 +70,10 @@ class Subtraction (
                 option4.setOnClickListener { wrongAnswer() }
             }
             2 -> {
-                option1.text = (number - 1).toString()
-                option2.text = (number + 1).toString()
-                option3.text = (number).toString()
-                option4.text = (number + 2).toString()
+                option1.text = (answer - 1).toString()
+                option2.text = (answer + 1).toString()
+                option3.text = (answer).toString()
+                option4.text = (answer + 2).toString()
 
                 option1.setOnClickListener { wrongAnswer() }
                 option2.setOnClickListener { wrongAnswer() }
@@ -81,10 +81,10 @@ class Subtraction (
                 option4.setOnClickListener { wrongAnswer() }
             }
             3 -> {
-                option1.text = (number + 2).toString()
-                option2.text = (number + 1).toString()
-                option3.text = (number - 1).toString()
-                option4.text = (number).toString()
+                option1.text = (answer + 2).toString()
+                option2.text = (answer + 1).toString()
+                option3.text = (answer - 1).toString()
+                option4.text = (answer).toString()
 
                 option1.setOnClickListener { wrongAnswer() }
                 option2.setOnClickListener { wrongAnswer() }
@@ -123,3 +123,4 @@ class Subtraction (
         showQuestion()
     }
 }
+

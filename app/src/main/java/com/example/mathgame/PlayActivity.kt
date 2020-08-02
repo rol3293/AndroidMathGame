@@ -3,6 +3,9 @@ package com.example.mathgame
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.example.mathgame.modes.Addition
+import com.example.mathgame.modes.Multiplication
+import com.example.mathgame.modes.Subtraction
 
 class PlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,12 +22,39 @@ class PlayActivity : AppCompatActivity() {
         val option4 = findViewById<Button>(R.id.option4)
         println(mode)
         if (mode == 1)
-            Addition(this, table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()
+            Addition(
+                this,
+                table,
+                timer,
+                findViewById(R.id.equation),
+                option1,
+                option2,
+                option3,
+                option4
+            ).showQuestion()
 
         else if (mode == 2)
-            Subtraction(this, table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()
+            Subtraction(
+                this,
+                table,
+                timer,
+                findViewById(R.id.equation),
+                option1,
+                option2,
+                option3,
+                option4
+            ).showQuestion()
         else if (mode == 3)
-            Multiplication(this, table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()
+            Multiplication(
+                this,
+                table,
+                timer,
+                findViewById(R.id.equation),
+                option1,
+                option2,
+                option3,
+                option4
+            ).showQuestion()
         /*else if (mode == 4)
             Division(table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()*/
         println("finished")

@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.mathgame.ResultActivity
 
-class Subtraction (
+class Division (
     private val context: Context,
     private val table: Int,
     private val timer: Int,
@@ -16,7 +16,6 @@ class Subtraction (
     private val option3: Button,
     private val option4: Button
 ) {
-
     private var timerIsStarted = false
     private var numbers: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     private var score = 0
@@ -41,8 +40,8 @@ class Subtraction (
         numbers.remove(number)
 
         // create question
-        val r = table + number
-        val question = "$r - $table"
+        val r = table * number
+        val question = "$r ÷ $table"
         equation.text = question
 
         // set the onclick of button and choose the button with the answer
@@ -123,3 +122,4 @@ class Subtraction (
         showQuestion()
     }
 }
+

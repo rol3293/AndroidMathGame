@@ -42,8 +42,7 @@ class Addition(
         equation.text = question
         val answer = number + table
 
-        val random = (0..3).random()
-        when (random) {
+        when ((0..3).random()) {
             0 -> {
                 option1.text = (answer).toString()
                 option2.text = (answer + 1).toString()

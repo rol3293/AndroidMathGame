@@ -45,8 +45,7 @@ class Multiplication (
         equation.text = question
 
         // set the onclick of button and choose the button with the answer
-        val random = (0..3).random()
-        when (random) {
+        when ((0..3).random()) {
             0 -> {
                 option1.text = (answer).toString()
                 option2.text = (answer + 1).toString()

@@ -8,8 +8,11 @@ import android.widget.TextView
 class Addition(
     private val context: Context,
     private val table: Int,
-    private val timer: Int, private val equation: TextView, private val option1: Button,
-    private val option2: Button, private val option3: Button,
+    private val timer: Int,
+    private val equation: TextView,
+    private val option1: Button,
+    private val option2: Button,
+    private val option3: Button,
     private val option4: Button
 ) {
 

@@ -23,9 +23,9 @@ class PlayActivity : AppCompatActivity() {
 
         else if (mode == 2)
             Subtraction(this, table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()
-        /*else if (mode == 3)
-            Multiplication(table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()
-        else if (mode == 4)
+        else if (mode == 3)
+            Multiplication(this, table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()
+        /*else if (mode == 4)
             Division(table, timer, findViewById(R.id.equation), option1, option2, option3, option4).showQuestion()*/
         println("finished")
     }

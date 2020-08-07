@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Button
 import android.widget.TextView
+import com.example.mathgame.Mistake
 import com.example.mathgame.ResultActivity
 
 class Division (
@@ -19,8 +20,11 @@ class Division (
     private var timerIsStarted = false
     private var numbers: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     private var score = 0
-    private var wrong: MutableList<String> = mutableListOf()
+    private var mistakes: ArrayList<Mistake> = ArrayList()
     private var answeredQuestions = 0
+
+    private var question = ""
+    private var answer = 0
 
     fun showQuestion() {
         // if theres is a timer or the timer isn't started, start it
@@ -41,9 +45,9 @@ class Division (
 
         // create question
         val r = table * number
-        val question = "$r ÷ $table"
+        question = "$r ÷ $table"
         equation.text = question
-
+        answer = number
         // set the onclick of button and choose the button with the answer
         when ((0..3).random()) {
             0 -> {
@@ -53,9 +57,9 @@ class Division (
                 option4.text = (number + 2).toString()
 
                 option1.setOnClickListener { rightAnswer() }
-                option2.setOnClickListener { wrongAnswer() }
-                option3.setOnClickListener { wrongAnswer() }
-                option4.setOnClickListener { wrongAnswer() }
+                option2.setOnClickListener { wrongAnswer(option2.text as String) }
+                option3.setOnClickListener { wrongAnswer(option3.text as String) }
+                option4.setOnClickListener { wrongAnswer(option4.text as String) }
             }
             1 -> {
                 option1.text = (number + 1).toString()
@@ -63,10 +67,10 @@ class Division (
                 option3.text = (number - 1).toString()
                 option4.text = (number + 2).toString()
 
-                option1.setOnClickListener { wrongAnswer() }
+                option1.setOnClickListener { wrongAnswer(option1.text as String) }
                 option2.setOnClickListener { rightAnswer() }
-                option3.setOnClickListener { wrongAnswer() }
-                option4.setOnClickListener { wrongAnswer() }
+                option3.setOnClickListener { wrongAnswer(option3.text as String) }
+                option4.setOnClickListener { wrongAnswer(option4.text as String) }
             }
             2 -> {
                 option1.text = (number - 1).toString()
@@ -74,10 +78,10 @@ class Division (
                 option3.text = (number).toString()
                 option4.text = (number + 2).toString()
 
-                option1.setOnClickListener { wrongAnswer() }
-                option2.setOnClickListener { wrongAnswer() }
+                option1.setOnClickListener { wrongAnswer(option1.text as String) }
+                option2.setOnClickListener { wrongAnswer(option2.text as String) }
                 option3.setOnClickListener { rightAnswer() }
-                option4.setOnClickListener { wrongAnswer() }
+                option4.setOnClickListener { wrongAnswer(option4.text as String) }
             }
             3 -> {
                 option1.text = (number + 2).toString()
@@ -85,9 +89,9 @@ class Division (
                 option3.text = (number - 1).toString()
                 option4.text = (number).toString()
 
-                option1.setOnClickListener { wrongAnswer() }
-                option2.setOnClickListener { wrongAnswer() }
-                option3.setOnClickListener { wrongAnswer() }
+                option1.setOnClickListener { wrongAnswer(option1.text as String) }
+                option2.setOnClickListener { wrongAnswer(option2.text as String) }
+                option3.setOnClickListener { wrongAnswer(option3.text as String) }
                 option4.setOnClickListener { rightAnswer() }
             }
         }
@@ -95,9 +99,11 @@ class Division (
 
     private fun showResults() {
         val intent = Intent(context, ResultActivity::class.java).apply {
-            putExtra("wrong", wrong as ArrayList<String>)
+            putExtra("answered_questions", answeredQuestions)
+            putExtra("score", score)
+            putExtra("wrong", mistakes.toTypedArray())
             putExtra("table", table)
-            putExtra("mode", 2)
+            putExtra("mode", 4)
         }
         context.startActivity(intent)
     }
@@ -115,10 +121,10 @@ class Division (
         // Make sound
         showQuestion()
     }
-    private fun wrongAnswer() {
+    private fun wrongAnswer(user_answer: String) {
         // Make sound
         answeredQuestions++
-        wrong.add(equation.text as String)
+        mistakes.add(Mistake(question, user_answer.toInt(), answer))
         showQuestion()
     }
 }

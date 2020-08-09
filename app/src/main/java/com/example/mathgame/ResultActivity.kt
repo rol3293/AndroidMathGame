@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
 import android.widget.TextView
-import com.example.mathgame.adapter.CustomAdapter
+import com.example.mathgame.helpers.CustomAdapter
+import com.example.mathgame.helpers.Mistake
 
 class ResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

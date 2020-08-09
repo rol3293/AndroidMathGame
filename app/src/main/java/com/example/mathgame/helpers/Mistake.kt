@@ -1,4 +1,4 @@
-package com.example.mathgame
+package com.example.mathgame.helpers
 
 import java.io.Serializable
 

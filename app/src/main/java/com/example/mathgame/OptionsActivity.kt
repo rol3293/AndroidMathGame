@@ -25,15 +25,18 @@ class OptionsActivity : AppCompatActivity() {
         } catch (e: NoSuchFieldException) {
         } catch (e: IllegalAccessException) {}
 
-        val timer_text_view = findViewById<TextView>(R.id.timer_text_view)
+        val timerTextView = findViewById<TextView>(R.id.timer_text_view)
 
-        val time_seekBar = findViewById<SeekBar>(R.id.time_seekBar)
-        time_seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+        val timeSeekbar = findViewById<SeekBar>(R.id.time_seekBar)
+        timeSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (progress > 0)
-                    timer_text_view.setText("Timer (" + progress * 10 + "s)")
-                else
-                    timer_text_view.setText("No Timer")
+                if (progress > 0) {
+                    val text = "Timer (" + progress * 10 + "s)"
+                    timerTextView.text = text
+                }
+                else {
+                    timerTextView.text = getString(R.string.no_timer)
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -45,7 +48,7 @@ class OptionsActivity : AppCompatActivity() {
             intent = Intent(this, PlayActivity::class.java).apply {
                 putExtra("mode", mode)
                 putExtra("table", spinner.selectedItem.toString().toInt())
-                putExtra("timer", time_seekBar.progress)
+                putExtra("timer", (timeSeekbar.progress * 10).toLong())
             }
             startActivity(intent)
         }

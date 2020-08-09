@@ -10,7 +10,7 @@
         android:id="@+id/failed_equation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:text="TextView"
         tools:text="3+3" />
 
@@ -19,7 +19,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="Your answer:"
+        android:text="@string/your_answer"
         android:textAlignment="viewEnd" />
 
     <TextView
@@ -36,7 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="Correct answer:"
+        android:text="@string/correct_answer"
         android:textAlignment="viewEnd" />
 
     <TextView

@@ -1,11 +1,10 @@
-package com.example.mathgame.adapter
+package com.example.mathgame.helpers
 
 import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.mathgame.Mistake
 import com.example.mathgame.R
 
 class CustomAdapter(private val context: Activity, private val errors: Array<Mistake>): BaseAdapter() {

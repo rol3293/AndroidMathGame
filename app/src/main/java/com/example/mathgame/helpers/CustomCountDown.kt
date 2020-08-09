@@ -20,7 +20,6 @@ class CustomCountDown(time: Long, private val playActivity: PlayActivity) {
                 // update how much time is left
                 msUntilFinished = millisUntilFinished
                 println(msUntilFinished / 1000)
-                // TODO update text view
             }
 
         }

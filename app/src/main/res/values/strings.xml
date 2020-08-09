@@ -10,6 +10,9 @@
     <string name="no_timer">No Timer</string>
     <string name="your_answer">Your answer:</string>
     <string name="correct_answer">Correct answer:</string>
+    <string name="setup">Setup</string>
+    <string name="table_selected">Table Selected:</string>
+    <string name="start">Start</string>
 
     <string-array name="tables">
         <item>1</item>

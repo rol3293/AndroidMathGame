@@ -3,18 +3,21 @@ package com.example.mathgame
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
+import android.view.View.VISIBLE
 import android.view.animation.LinearInterpolator
 import android.widget.Button
+import android.widget.Chronometer
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.example.mathgame.helpers.CustomCountDown
 import com.example.mathgame.helpers.Mistake
 
 class PlayActivity : AppCompatActivity() {
 
 
+    private var timePassed: Long? = null
     private var countDown: CustomCountDown?= null
     private var countDownIsRunning = false
 
@@ -22,6 +25,7 @@ class PlayActivity : AppCompatActivity() {
     private var timer: Long = 0
     private var mode: Int = 0
 
+    private var chronometer: Chronometer? = null
     private var equation: TextView? = null
     private var option1: Button? = null
     private var option2: Button? = null
@@ -40,40 +44,45 @@ class PlayActivity : AppCompatActivity() {
     private var animator: ObjectAnimator? = null
 
         override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_play)
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_play)
 
-        // get the mode, table and timer time from intent and store in a variable
-        mode = intent.getIntExtra("mode", 0)
-        table = intent.getIntExtra("table", 0)
-        timer = intent.getLongExtra("timer", 0)
+            // get the mode, table and timer time from intent and store in a variable
+            mode = intent.getIntExtra("mode", 0)
+            table = intent.getIntExtra("table", 0)
+            timer = intent.getLongExtra("timer", 0)
 
-        // set value to equation
-        equation = findViewById(R.id.equation)
+            // set value to equation
+            equation = findViewById(R.id.equation)
 
-        // assign value to buttons
-        option1 = findViewById(R.id.option1)
-        option2 = findViewById(R.id.option2)
-        option3 = findViewById(R.id.option3)
-        option4 = findViewById(R.id.option4)
-        next = findViewById(R.id.show_result)
+            // assign value to buttons
+            option1 = findViewById(R.id.option1)
+            option2 = findViewById(R.id.option2)
+            option3 = findViewById(R.id.option3)
+            option4 = findViewById(R.id.option4)
+            next = findViewById(R.id.show_result)
 
-        // if timer is not 0
-        if (timer != 0L) {
-            // start the countDown timer
-            countDown =
-                CustomCountDown(timer * 1000, this)
-            countDown!!.startTimer()
-            countDownIsRunning = true
-            // start animation to progressbar
-            val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-            progressBar.isVisible = true
-            animator = ObjectAnimator.ofInt(progressBar, "progress", 10000, 0)
-            animator!!.interpolator = LinearInterpolator()
-            animator!!.duration = timer * 1000
-            animator!!.start()
-        }
-        showQuestion()
+            // if timer is not 0
+            if (timer != 0L) {
+                // start the countDown timer
+                countDown = CustomCountDown(timer * 1000, this)
+                countDown!!.startTimer()
+                countDownIsRunning = true
+                // start animation to progressbar
+                val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+                progressBar.visibility = VISIBLE
+                animator = ObjectAnimator.ofInt(progressBar, "progress", 10000, 0)
+                animator!!.interpolator = LinearInterpolator()
+                animator!!.duration = timer * 1000
+                animator!!.start()
+            }
+            else {
+                chronometer = findViewById(R.id.chronometer)
+                chronometer!!.visibility = VISIBLE
+                chronometer!!.base = SystemClock.elapsedRealtime()
+                chronometer!!.start()
+            }
+            showQuestion()
     }
 
 
@@ -158,18 +167,21 @@ class PlayActivity : AppCompatActivity() {
     }
     fun showResults(automaticallyChangeActivity: Boolean) {
         disableButtons()
+        chronometer!!.stop()
+        timePassed = SystemClock.elapsedRealtime() - chronometer!!.base
         val intent = Intent(this, ResultActivity::class.java).apply {
             putExtra("score", score)
             putExtra("answered_questions", answeredQuestions)
             putExtra("wrong", mistakes.toTypedArray())
             putExtra("table", table)
             putExtra("mode", mode)
+            putExtra("timePassed", timePassed!!)
         }
         if (automaticallyChangeActivity) {
             startActivity(intent)
         }
         else {
-            next!!.isVisible = true
+            next!!.visibility = VISIBLE
             next!!.setOnClickListener { showResults(true) }
         }
 
@@ -183,19 +195,13 @@ class PlayActivity : AppCompatActivity() {
     private fun rightAnswer() {
         score++
         answeredQuestions++
-        // Make sound
+        // TODO Make sound
         showQuestion()
     }
     private fun wrongAnswer(user_answer: String) {
         answeredQuestions++
-        mistakes.add(
-            Mistake(
-                question,
-                user_answer.toInt(),
-                answer
-            )
-        )
-        //make sound
+        mistakes.add(Mistake(question, user_answer.toInt(), answer))
+        // TODO make sound
         showQuestion()
     }
     override fun onPause() {
@@ -206,6 +212,11 @@ class PlayActivity : AppCompatActivity() {
             countDownIsRunning = false
             animator!!.pause()
         }
+        else if (timePassed != null){
+            // stop the chronometer and remember when it was stopped
+            chronometer!!.stop()
+            timePassed = SystemClock.elapsedRealtime() - chronometer!!.base
+        }
     }
 
     override fun onResume() {
@@ -214,6 +225,11 @@ class PlayActivity : AppCompatActivity() {
         if (!countDownIsRunning && countDown != null) {
             countDown!!.continueTimer()
             animator!!.resume()
+        }
+        else if (timePassed != null){
+            // resume chronometer where it left off
+            chronometer!!.base = SystemClock.elapsedRealtime() - timePassed!!
+            chronometer!!.start()
         }
     }
 }

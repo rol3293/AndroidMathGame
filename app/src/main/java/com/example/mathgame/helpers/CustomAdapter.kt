@@ -1,5 +1,6 @@
 package com.example.mathgame.helpers
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
@@ -9,19 +10,20 @@ import com.example.mathgame.R
 
 class CustomAdapter(private val context: Activity, private val errors: Array<Mistake>): BaseAdapter() {
 
+    @SuppressLint("InflateParams", "ViewHolder")
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         // inflate
         val inflater = context.layoutInflater
         val rowView = inflater.inflate(R.layout.custom_layout, null, true)
 
-        var missedEquation = rowView.findViewById<TextView>(R.id.failed_equation)
+        val missedEquation = rowView.findViewById<TextView>(R.id.failed_equation)
         missedEquation.text = errors[position].getEquation()
 
-        var user_answer = rowView.findViewById<TextView>(R.id.user_answer)
-        user_answer.text = errors[position].getUserAnswer().toString()
+        val userAnswer = rowView.findViewById<TextView>(R.id.user_answer)
+        userAnswer.text = errors[position].getUserAnswer().toString()
 
-        var correct_answer = rowView.findViewById<TextView>(R.id.correct_answer)
-        correct_answer.text = errors[position].getRightAnswer().toString()
+        val correctAnswer = rowView.findViewById<TextView>(R.id.correct_answer)
+        correctAnswer.text = errors[position].getRightAnswer().toString()
 
         return rowView
     }

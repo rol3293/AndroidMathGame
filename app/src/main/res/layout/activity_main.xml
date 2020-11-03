@@ -8,58 +8,83 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="260dp"
         android:text="@string/main_page_title"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="35sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/addition"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:text="@string/mode1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="80dp"
+        android:background="@drawable/add_400a"
+        app:layout_constraintBaseline_toBaselineOf="@+id/subtraction"
+        app:layout_constraintEnd_toStartOf="@+id/subtraction"
+        app:layout_constraintHorizontal_bias="0.367"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/subtraction"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/sub_400a"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintTop_toBottomOf="@+id/division"
+        app:layout_constraintVertical_bias="0.057" />
+
+    <Button
+        android:id="@+id/multiplication"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/mul_400a"
+        app:layout_constraintEnd_toStartOf="@+id/division"
+        app:layout_constraintHorizontal_bias="0.367"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/subtraction"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/mode2"
-        app:layout_constraintEnd_toEndOf="@+id/addition"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/addition"
-        app:layout_constraintTop_toBottomOf="@+id/addition" />
-
-    <Button
-        android:id="@+id/multiplication"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/mode3"
-        app:layout_constraintEnd_toEndOf="@+id/subtraction"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/subtraction"
-        app:layout_constraintTop_toBottomOf="@+id/subtraction" />
-
-    <Button
         android:id="@+id/division"
-        android:layout_width="250dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="92dp"
+        android:background="@drawable/divl_400a"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/oper400" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/mode4"
-        app:layout_constraintEnd_toEndOf="@+id/multiplication"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/multiplication"
-        app:layout_constraintTop_toBottomOf="@+id/multiplication" />
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:srcCompat="@drawable/ope" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MathGame</string>
 
-    <string name="main_page_title">Choose a game mode</string>
+    <string name="main_page_title">Select an operation to practice</string>
     <string name="mode1">Addition (+)</string>
     <string name="mode2">Subtraction (-)</string>
     <string name="mode3">Multiplication (×)</string>

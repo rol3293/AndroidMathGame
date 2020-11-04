@@ -28,7 +28,7 @@ class ResultActivity : AppCompatActivity() {
 
 
         // if user made mistakes show them
-        if (score != 12) {
+        if (score < 12) {
             // change the adapter of the list view
             val listView = findViewById<ListView>(R.id.error_listview)
             listView.visibility = View.VISIBLE

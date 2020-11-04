@@ -13,7 +13,7 @@
     <string name="setup">Setup</string>
     <string name="table_selected">Table Selected:</string>
     <string name="start">Start</string>
-    <string name="congrats_text">Good job! All you answers are right!</string>
+    <string name="congrats_text">Good job! All your answers are right!</string>
 
     <string-array name="tables">
         <item>1</item>

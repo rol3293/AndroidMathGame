@@ -3,10 +3,12 @@ package com.example.mathgame
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import com.example.mathgame.helpers.CustomAdapter
 import com.example.mathgame.helpers.Mistake
+import org.w3c.dom.Text
 
 @Suppress("UNCHECKED_CAST")
 class ResultActivity : AppCompatActivity() {
@@ -33,7 +35,8 @@ class ResultActivity : AppCompatActivity() {
             listView.adapter = CustomAdapter(this, errors)
         }
         else {
-
+            findViewById<ImageView>(R.id.correct_image).visibility = View.VISIBLE
+            findViewById<TextView>(R.id.congrats_text).visibility = View.VISIBLE
         }
     }
 }

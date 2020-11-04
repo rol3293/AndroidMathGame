@@ -26,6 +26,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="52dp"
         android:text="@string/table_selected"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -34,8 +35,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:entries="@array/tables"
         android:dropDownWidth="65dp"
+        android:entries="@array/tables"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"
         app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toTopOf="@+id/textView3" />
@@ -47,17 +48,22 @@
         android:layout_height="wrap_content"
         android:max="12"
         android:min="0"
+        android:padding="16dp"
         android:progress="0"
+
+        android:minHeight="6dp"
+        android:maxHeight="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/timer_text_view"
         app:layout_constraintStart_toEndOf="@+id/timer_text_view"
         app:layout_constraintTop_toTopOf="@+id/timer_text_view" />
 
     <TextView
         android:id="@+id/timer_text_view"
-        android:layout_width="85dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/no_timer"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 

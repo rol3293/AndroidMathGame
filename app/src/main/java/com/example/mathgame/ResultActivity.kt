@@ -2,6 +2,7 @@ package com.example.mathgame
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ListView
 import android.widget.TextView
 import com.example.mathgame.helpers.CustomAdapter
@@ -28,7 +29,11 @@ class ResultActivity : AppCompatActivity() {
         if (score != 12) {
             // change the adapter of the list view
             val listView = findViewById<ListView>(R.id.error_listview)
+            listView.visibility = View.VISIBLE
             listView.adapter = CustomAdapter(this, errors)
+        }
+        else {
+
         }
     }
 }

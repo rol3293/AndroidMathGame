@@ -73,7 +73,8 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/oper400" />
+        app:srcCompat="@drawable/oper400"
+        android:contentDescription="@string/logo" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -84,6 +85,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.13"
-        app:srcCompat="@drawable/ope" />
+        app:srcCompat="@drawable/ope"
+        android:contentDescription="@string/title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

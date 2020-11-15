@@ -20,12 +20,13 @@ class PlayActivity : AppCompatActivity() {
     private var timePassed: Long? = null
     private var countDown: CustomCountDown? = null
     private var countDownIsRunning = false
+    private var gameIsFinished = false
 
     private var table: Int = 0
-    private var timer: Long = 0
+    private var timer: Long = 0L
     private var mode: Int = 0
 
-    private lateinit var chronometer: Chronometer
+    //private lateinit var chronometer: Chronometer
     private lateinit var equation: TextView
     private lateinit var option1: Button
     private lateinit var option2: Button
@@ -50,7 +51,7 @@ class PlayActivity : AppCompatActivity() {
         // get the mode, table and timer time from intent and store in a variable
         mode = intent.getIntExtra("mode", 0)
         table = intent.getIntExtra("table", 0)
-        timer = intent.getLongExtra("timer", 0)
+        timer = intent.getLongExtra("timer", 0L)
 
         // set value to equation
         equation = findViewById(R.id.equation)
@@ -75,12 +76,12 @@ class PlayActivity : AppCompatActivity() {
             animator.interpolator = LinearInterpolator()
             animator.duration = timer * 1000
             animator.start()
-        } else {
-            chronometer = findViewById(R.id.chronometer)
-            chronometer.visibility = VISIBLE
-            chronometer.base = SystemClock.elapsedRealtime()
-            chronometer.start()
-        }
+        } //else {
+//            chronometer = findViewById(R.id.chronometer)
+//            chronometer.visibility = VISIBLE
+//            chronometer.base = SystemClock.elapsedRealtime()
+//            chronometer.start()
+//        }
         showQuestion()
     }
 
@@ -167,18 +168,19 @@ class PlayActivity : AppCompatActivity() {
 
     fun showResults(automaticallyChangeActivity: Boolean) {
         disableButtons()
-        if (timePassed != null) {
-            chronometer.stop()
-            timePassed = SystemClock.elapsedRealtime() - chronometer.base
-        } else
-            timePassed = 0
+//        if (timePassed != null && timePassed != 0L) {
+//            chronometer.stop()
+//            timePassed = SystemClock.elapsedRealtime() - chronometer.base
+//        } else
+//            timePassed = 0
         val intent = Intent(this, ResultActivity::class.java).apply {
             putExtra("score", score)
             putExtra("answered_questions", answeredQuestions)
             putExtra("wrong", mistakes.toTypedArray())
             putExtra("table", table)
             putExtra("mode", mode)
-            putExtra("timePassed", timePassed!!)
+            putExtra("timer", timer)
+//            putExtra("timePassed", timePassed!!)
         }
         if (automaticallyChangeActivity) {
             startActivity(intent)
@@ -186,7 +188,13 @@ class PlayActivity : AppCompatActivity() {
             next.visibility = VISIBLE
             next.setOnClickListener { showResults(true) }
         }
-
+        if (countDownIsRunning && countDown != null) {
+            stopCountDown()
+        }
+//        else if (timePassed != null && timePassed != 0L) {
+//            stopTimer()
+//        }
+        gameIsFinished = true
     }
 
     private fun disableButtons() {
@@ -212,28 +220,57 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        println("onPause called")
         // if the countDown is running and that there's a timer, stop the timer and animation
-        if (countDownIsRunning && countDown != null) {
-            countDown!!.stopTimer()
-            countDownIsRunning = false
-            animator.pause()
-        } else if (timePassed != null) {
-            // stop the chronometer and remember when it was stopped
-            chronometer.stop()
-            timePassed = SystemClock.elapsedRealtime() - chronometer.base
+        if (!gameIsFinished) {
+            if (countDownIsRunning) {
+                stopCountDown()
+            }
+//            else if (timePassed != null) {
+//                stopTimer()
+//            }
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        println("onStop called")
+    }
     override fun onResume() {
         super.onResume()
-        // if the countDown is running and that there's a timer, resume the timer and animation
-        if (!countDownIsRunning && countDown != null) {
-            countDown!!.continueTimer()
-            animator.resume()
-        } else if (timePassed != null) {
-            // resume chronometer where it left off
-            chronometer.base = SystemClock.elapsedRealtime() - timePassed!!
-            chronometer.start()
+        if (!gameIsFinished) {
+
+            // if the countDown is running and that there's a timer, resume the timer and animation
+            if (!countDownIsRunning) {
+                continueCountDown()
+            }
+//            else if (timePassed != null) {
+//                continueTimer()
+//            }
         }
+    }
+
+//    private fun continueTimer() {
+//        // resume chronometer where it left off
+//        chronometer.base = SystemClock.elapsedRealtime() - timePassed!!
+//        chronometer.start()
+//    }
+
+//    private fun stopTimer() {
+//        // stop the chronometer and remember when it was stopped
+//        chronometer.stop()
+//        timePassed = SystemClock.elapsedRealtime() - chronometer.base
+//    }
+
+    private fun continueCountDown() {
+        countDown!!.continueTimer()
+        animator.resume()
+        countDownIsRunning = true
+    }
+
+    private fun stopCountDown() {
+        countDown!!.stopTimer()
+        countDownIsRunning = false
+        animator.pause()
     }
 }

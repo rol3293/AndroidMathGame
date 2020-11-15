@@ -16,6 +16,9 @@
     <string name="congrats_text">Good job! All your answers are right!</string>
     <string name="logo">logo</string>
     <string name="title">title</string>
+    <string name="correct_image_desc">green check mark</string>
+    <string name="operation_answered">Operation answered: %d</string>
+    <string name="mistakes">Mistakes(%d):</string>
 
     <string-array name="tables">
         <item>1</item>

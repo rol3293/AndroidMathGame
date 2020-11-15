@@ -7,7 +7,7 @@ class CustomCountDown(time: Long, private val playActivity: PlayActivity) {
     // remember milliseconds when pausing
     var msUntilFinished = time
     // create timer variable so it can be used in this class
-    private var timer: CountDownTimer ?= null
+    private lateinit var timer: CountDownTimer
 
     // this function starts the timer, pretty self explanatory
     fun startTimer() {
@@ -23,10 +23,10 @@ class CustomCountDown(time: Long, private val playActivity: PlayActivity) {
             }
 
         }
-        timer!!.start()
+        timer.start()
     }
     fun stopTimer() {
-        timer!!.cancel()
+        timer.cancel()
         println("paused, ${msUntilFinished / 1000} seconds left")
     }
     fun continueTimer() {

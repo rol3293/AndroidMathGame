@@ -10,7 +10,7 @@
         android:id="@+id/equation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="60dp"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="50sp"
@@ -24,20 +24,20 @@
         android:id="@+id/option1"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="40dp"
         android:paddingHorizontal="50dp"
         android:paddingVertical="25dp"
         android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/option2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/option2"
         tools:text="1" />
 
     <Button
         android:id="@+id/option2"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="40dp"
         android:paddingHorizontal="50dp"
         android:paddingVertical="25dp"
         android:textSize="18sp"
@@ -52,7 +52,7 @@
         android:paddingHorizontal="50dp"
         android:paddingVertical="25dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/option4"
+        app:layout_constraintBaseline_toBaselineOf="@+id/option4"
         app:layout_constraintEnd_toEndOf="@+id/option1"
         app:layout_constraintStart_toStartOf="@+id/option1"
         tools:text="3" />
@@ -96,17 +96,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/equation"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="@+id/equation"
-        app:layout_constraintTop_toBottomOf="@+id/equation"
-        tools:visibility="visible" />
+<!--    <Chronometer-->
+<!--        android:id="@+id/chronometer"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="28dp"-->
+<!--        android:textSize="20sp"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/equation"-->
+<!--        app:layout_constraintHorizontal_bias="0.492"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/equation"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/equation"-->
+<!--        tools:visibility="visible" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

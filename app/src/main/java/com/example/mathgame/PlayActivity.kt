@@ -220,7 +220,6 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        println("onPause called")
         // if the countDown is running and that there's a timer, stop the timer and animation
         if (!gameIsFinished) {
             if (countDownIsRunning) {
@@ -232,10 +231,6 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        println("onStop called")
-    }
     override fun onResume() {
         super.onResume()
         if (!gameIsFinished) {

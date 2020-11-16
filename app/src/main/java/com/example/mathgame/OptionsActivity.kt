@@ -14,6 +14,22 @@ class OptionsActivity : AppCompatActivity() {
 
         val mode =  intent.getIntExtra("mode", 0)
 
+        val modeTxt = findViewById<TextView>(R.id.modeTxt)
+        when (mode) {
+            1 -> { // if mode is addition
+                modeTxt.text = getText(R.string.mode1)
+            }
+            2 -> { // if mode is subtraction
+                modeTxt.text = getText(R.string.mode2)
+            }
+            3 -> { // if mode is multiplication
+                modeTxt.text = getText(R.string.mode3)
+            }
+            4 -> { // if mode is division
+                modeTxt.text = getText(R.string.mode4)
+            }
+        }
+
         val spinner = findViewById<Spinner>(R.id.tables_spinner)
         try {
             val popup = Spinner::class.java.getDeclaredField("mPopup")

@@ -19,6 +19,9 @@
     <string name="correct_image_desc">green check mark</string>
     <string name="operation_answered">Operation answered: %d</string>
     <string name="mistakes">Mistakes(%d):</string>
+    <string name="replay">Replay</string>
+    <string name="change_table">Change Table</string>
+    <string name="main_menu">Main Menu</string>
 
     <string-array name="tables">
         <item>1</item>

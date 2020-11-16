@@ -47,7 +47,6 @@ class PlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
-
         // get the mode, table and timer time from intent and store in a variable
         mode = intent.getIntExtra("mode", 0)
         table = intent.getIntExtra("table", 0)
@@ -222,7 +221,7 @@ class PlayActivity : AppCompatActivity() {
         super.onPause()
         // if the countDown is running and that there's a timer, stop the timer and animation
         if (!gameIsFinished) {
-            if (countDownIsRunning) {
+            if (countDownIsRunning && countDown != null) {
                 stopCountDown()
             }
 //            else if (timePassed != null) {
@@ -236,7 +235,7 @@ class PlayActivity : AppCompatActivity() {
         if (!gameIsFinished) {
 
             // if the countDown is running and that there's a timer, resume the timer and animation
-            if (!countDownIsRunning) {
+            if (!countDownIsRunning && countDown != null) {
                 continueCountDown()
             }
 //            else if (timePassed != null) {

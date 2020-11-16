@@ -22,6 +22,8 @@
     <string name="replay">Replay</string>
     <string name="change_table">Change Table</string>
     <string name="main_menu">Main Menu</string>
+    <string name="mode">Mode: %1$s</string>
+    <string name="mode_selected">Mode Selected:</string>
 
     <string-array name="tables">
         <item>1</item>

@@ -1,17 +1,15 @@
 package com.example.mathgame
 
 import android.content.Intent
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mathgame.helpers.CustomAdapter
 import com.example.mathgame.helpers.Mistake
-import org.w3c.dom.Text
 
 @Suppress("UNCHECKED_CAST")
 class ResultActivity : AppCompatActivity() {
@@ -86,5 +84,9 @@ class ResultActivity : AppCompatActivity() {
 
     private fun mainMenu() {
         startActivity(Intent(this, MainActivity::class.java))
+    }
+
+    override fun onBackPressed() {
+
     }
 }

@@ -16,7 +16,7 @@ import com.example.mathgame.helpers.Mistake
 class PlayActivity : AppCompatActivity() {
 
 
-    private var timePassed: Long? = null
+    //private var timePassed: Long? = null
     private var countDown: CustomCountDown? = null
     private var countDownIsRunning = false
     private var gameIsFinished = false

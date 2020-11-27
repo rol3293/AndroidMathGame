@@ -2,12 +2,11 @@ package com.example.mathgame
 
 import android.animation.ObjectAnimator
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.View.VISIBLE
 import android.view.animation.LinearInterpolator
 import android.widget.Button
-import android.widget.Chronometer
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +20,8 @@ class PlayActivity : AppCompatActivity() {
     private var countDown: CustomCountDown? = null
     private var countDownIsRunning = false
     private var gameIsFinished = false
+
+    private var player: MediaPlayer? = null
 
     private var table: Int = 0
     private var timer: Long = 0L
@@ -206,14 +207,18 @@ class PlayActivity : AppCompatActivity() {
     private fun rightAnswer() {
         answeredQuestions++
         score++
-        // TODO Make sound
+        // play sound
+        player = MediaPlayer.create(this, R.raw.correct_sound_effect)
+        player!!.start()
         showQuestion()
     }
 
     private fun wrongAnswer(user_answer: String) {
         answeredQuestions++
         mistakes.add(Mistake(question, user_answer.toInt(), answer))
-        // TODO make sound
+        // play sound
+        player = MediaPlayer.create(this, R.raw.wrong_sound_effect)
+        player!!.start()
         showQuestion()
     }
 

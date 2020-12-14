@@ -25,6 +25,7 @@
     <string name="mode">Mode: %1$s</string>
     <string name="mode_selected">Mode Selected:</string>
     <string name="unanswered">Unanswered</string>
+    <string name="result">Result:</string>
 
     <string-array name="tables">
         <item>1</item>

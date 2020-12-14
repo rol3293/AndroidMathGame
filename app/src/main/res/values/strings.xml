@@ -26,6 +26,7 @@
     <string name="mode_selected">Mode Selected:</string>
     <string name="unanswered">Unanswered</string>
     <string name="result">Result:</string>
+    <string name="answer">Answer:</string>
 
     <string-array name="tables">
         <item>1</item>

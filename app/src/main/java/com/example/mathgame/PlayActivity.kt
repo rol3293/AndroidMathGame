@@ -11,23 +11,22 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mathgame.helpers.CustomCountDown
-import com.example.mathgame.helpers.Mistake
+import com.example.mathgame.helpers.Equation
 
 class PlayActivity : AppCompatActivity() {
 
 
-    //private var timePassed: Long? = null
     private var countDown: CustomCountDown? = null
     private var countDownIsRunning = false
     private var gameIsFinished = false
 
-    private var player: MediaPlayer? = null
+    private lateinit var rightSoundEffect: MediaPlayer
+    private lateinit var wrongSoundEffect: MediaPlayer
 
     private var table: Int = 0
     private var timer: Long = 0L
     private var mode: Int = 0
 
-    //private lateinit var chronometer: Chronometer
     private lateinit var equation: TextView
     private lateinit var option1: Button
     private lateinit var option2: Button
@@ -37,7 +36,7 @@ class PlayActivity : AppCompatActivity() {
 
     // initialize variable for mistakes, score, answered questions, question, answer
     private var numbers: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-    private var mistakes: ArrayList<Mistake> = ArrayList()
+    private var equations: ArrayList<Equation> = ArrayList()
     private var score = 0
     private var answeredQuestions = 0
     private var question = ""
@@ -48,6 +47,9 @@ class PlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
+
+        rightSoundEffect = MediaPlayer.create(this, R.raw.correct_sound_effect)
+        wrongSoundEffect = MediaPlayer.create(this, R.raw.wrong_sound_effect)
         // get the mode, table and timer time from intent and store in a variable
         mode = intent.getIntExtra("mode", 0)
         table = intent.getIntExtra("table", 0)
@@ -76,16 +78,13 @@ class PlayActivity : AppCompatActivity() {
             animator.interpolator = LinearInterpolator()
             animator.duration = timer * 1000
             animator.start()
-        } //else {
-//            chronometer = findViewById(R.id.chronometer)
-//            chronometer.visibility = VISIBLE
-//            chronometer.base = SystemClock.elapsedRealtime()
-//            chronometer.start()
-//        }
+        }
         showQuestion()
     }
 
-
+    /**
+     * Show the next question and give one button the right answer
+     */
     private fun showQuestion() {
         if (numbers.size == 0) {
             showResults(true)
@@ -125,7 +124,7 @@ class PlayActivity : AppCompatActivity() {
                 option3.text = (answer - 1).toString()
                 option4.text = (answer + 2).toString()
 
-                option1.setOnClickListener { rightAnswer() }
+                option1.setOnClickListener { rightAnswer(option1.text as String) }
                 option2.setOnClickListener { wrongAnswer(option2.text as String) }
                 option3.setOnClickListener { wrongAnswer(option3.text as String) }
                 option4.setOnClickListener { wrongAnswer(option4.text as String) }
@@ -137,7 +136,7 @@ class PlayActivity : AppCompatActivity() {
                 option4.text = (answer + 2).toString()
 
                 option1.setOnClickListener { wrongAnswer(option1.text as String) }
-                option2.setOnClickListener { rightAnswer() }
+                option2.setOnClickListener { rightAnswer(option2.text as String) }
                 option3.setOnClickListener { wrongAnswer(option3.text as String) }
                 option4.setOnClickListener { wrongAnswer(option4.text as String) }
             }
@@ -149,7 +148,7 @@ class PlayActivity : AppCompatActivity() {
 
                 option1.setOnClickListener { wrongAnswer(option1.text as String) }
                 option2.setOnClickListener { wrongAnswer(option2.text as String) }
-                option3.setOnClickListener { rightAnswer() }
+                option3.setOnClickListener { rightAnswer(option3.text as String) }
                 option4.setOnClickListener { wrongAnswer(option4.text as String) }
             }
             3 -> {
@@ -161,42 +160,83 @@ class PlayActivity : AppCompatActivity() {
                 option1.setOnClickListener { wrongAnswer(option1.text as String) }
                 option2.setOnClickListener { wrongAnswer(option2.text as String) }
                 option3.setOnClickListener { wrongAnswer(option3.text as String) }
-                option4.setOnClickListener { rightAnswer() }
+                option4.setOnClickListener { rightAnswer(option4.text as String) }
             }
         }
     }
 
+    /**
+     * Prepare to load the next activity
+     */
     fun showResults(automaticallyChangeActivity: Boolean) {
+        releaseSoundEffects()
         disableButtons()
-//        if (timePassed != null && timePassed != 0L) {
-//            chronometer.stop()
-//            timePassed = SystemClock.elapsedRealtime() - chronometer.base
-//        } else
-//            timePassed = 0
         val intent = Intent(this, ResultActivity::class.java).apply {
             putExtra("score", score)
             putExtra("answered_questions", answeredQuestions)
-            putExtra("wrong", mistakes.toTypedArray())
+            putExtra("wrong", equations.toTypedArray())
             putExtra("table", table)
             putExtra("mode", mode)
             putExtra("timer", timer)
-//            putExtra("timePassed", timePassed!!)
         }
         if (automaticallyChangeActivity) {
             startActivity(intent)
         } else {
+            fillUnansweredQuestions()
             next.visibility = VISIBLE
             next.setOnClickListener { showResults(true) }
         }
         if (countDownIsRunning && countDown != null) {
-            stopCountDown()
+            pauseCountDown()
         }
-//        else if (timePassed != null && timePassed != 0L) {
-//            stopTimer()
-//        }
         gameIsFinished = true
     }
 
+    /**
+     * Stop and release the sound effects
+     */
+    private fun releaseSoundEffects() {
+//        if (rightSoundEffect.isPlaying)
+//            rightSoundEffect.stop()
+        rightSoundEffect.release()
+//        if (wrongSoundEffect.isPlaying)
+//            wrongSoundEffect.stop()
+        wrongSoundEffect.release()
+    }
+
+    /**
+     * Find all the unanswered equations and add it as mistakes
+     */
+    private fun fillUnansweredQuestions() {
+        // take a number and remove it from list
+        println(numbers.size)
+        for (number in numbers) {
+            // set the question and answer depending the mode
+            when (mode) {
+                1 -> { // if mode is addition
+                    question = "$number + $table"
+                    answer = number + table
+                }
+                2 -> { // if mode is subtraction
+                    question = "${table + number} - $table"
+                    answer = number
+                }
+                3 -> { // if mode is multiplication
+                    question = "$number × $table"
+                    answer = number * table
+                }
+                4 -> { // if mode is division
+                    question = "${table * number} ÷ $table"
+                    answer = number
+                }
+            }
+            equations.add(Equation(question, answer.toString()))
+        }
+    }
+
+    /**
+     * Disable all 4 buttons
+     */
     private fun disableButtons() {
         option1.isEnabled = false
         option2.isEnabled = false
@@ -204,21 +244,32 @@ class PlayActivity : AppCompatActivity() {
         option4.isEnabled = false
     }
 
-    private fun rightAnswer() {
+    /**
+     * Add point, play a sound, and show the next equation
+     * <br>
+     *     Call this function when the user gets the right answer
+     */
+    private fun rightAnswer(userAnswer: String) {
         answeredQuestions++
         score++
+        equations.add(Equation(question, userAnswer, answer.toString(), true))
         // play sound
-        player = MediaPlayer.create(this, R.raw.correct_sound_effect)
-        player!!.start()
+        rightSoundEffect.start()
+        // show the next question
         showQuestion()
     }
 
-    private fun wrongAnswer(user_answer: String) {
+    /**
+     * play a sound, and show the next equation
+     * <br>
+     *     Call this function when the user gets the wrong answer
+     */
+    private fun wrongAnswer(userAnswer: String) {
         answeredQuestions++
-        mistakes.add(Mistake(question, user_answer.toInt(), answer))
+        equations.add(Equation(question, userAnswer, answer.toString(), false))
         // play sound
-        player = MediaPlayer.create(this, R.raw.wrong_sound_effect)
-        player!!.start()
+        wrongSoundEffect.start()
+        // show the next question
         showQuestion()
     }
 
@@ -227,11 +278,8 @@ class PlayActivity : AppCompatActivity() {
         // if the countDown is running and that there's a timer, stop the timer and animation
         if (!gameIsFinished) {
             if (countDownIsRunning && countDown != null) {
-                stopCountDown()
+                pauseCountDown()
             }
-//            else if (timePassed != null) {
-//                stopTimer()
-//            }
         }
     }
 
@@ -243,31 +291,22 @@ class PlayActivity : AppCompatActivity() {
             if (!countDownIsRunning && countDown != null) {
                 continueCountDown()
             }
-//            else if (timePassed != null) {
-//                continueTimer()
-//            }
         }
     }
 
-//    private fun continueTimer() {
-//        // resume chronometer where it left off
-//        chronometer.base = SystemClock.elapsedRealtime() - timePassed!!
-//        chronometer.start()
-//    }
-
-//    private fun stopTimer() {
-//        // stop the chronometer and remember when it was stopped
-//        chronometer.stop()
-//        timePassed = SystemClock.elapsedRealtime() - chronometer.base
-//    }
-
+    /**
+     * Continue the countdown timer
+     */
     private fun continueCountDown() {
         countDown!!.continueTimer()
         animator.resume()
         countDownIsRunning = true
     }
 
-    private fun stopCountDown() {
+    /**
+     * Pause the countdown timer
+     */
+    private fun pauseCountDown() {
         countDown!!.stopTimer()
         countDownIsRunning = false
         animator.pause()

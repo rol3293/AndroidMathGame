@@ -4,12 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mathgame.helpers.CustomAdapter
-import com.example.mathgame.helpers.Mistake
+import com.example.mathgame.helpers.Equation
 
 @Suppress("UNCHECKED_CAST")
 class ResultActivity : AppCompatActivity() {
@@ -34,7 +33,7 @@ class ResultActivity : AppCompatActivity() {
         findViewById<Button>(R.id.mainMenuBtn).setOnClickListener { mainMenu() }
 
         // get and store all errors in variable
-        val errors: Array<Mistake> = intent.getSerializableExtra("wrong") as Array<Mistake>
+        val errors: Array<Equation> = intent.getSerializableExtra("wrong") as Array<Equation>
         val score = intent.getIntExtra("score", 0)
         val timer = intent.getLongExtra("timer", 0L)
         val answeredQuestions = intent.getIntExtra("answered_questions", 0)
@@ -52,21 +51,15 @@ class ResultActivity : AppCompatActivity() {
         }
 
 
-        // if user made mistakes show them
-        if (score < 12) {
-            findViewById<TextView>(R.id.mistakesText).apply {
-                visibility = View.VISIBLE
-                text = getString(R.string.mistakes, answeredQuestions-score)
-            }
-            // change the adapter of the list view
-            val listView = findViewById<ListView>(R.id.error_listview)
-            listView.visibility = View.VISIBLE
-            listView.adapter = CustomAdapter(this, errors)
+        findViewById<TextView>(R.id.mistakesText).apply {
+            visibility = View.VISIBLE
+            text = context.getString(R.string.result)
         }
-        else {
-            findViewById<ImageView>(R.id.correct_image).visibility = View.VISIBLE
-            findViewById<TextView>(R.id.congrats_text).visibility = View.VISIBLE
-        }
+        // change the adapter of the list view
+        val listView = findViewById<ListView>(R.id.error_listview)
+        listView.visibility = View.VISIBLE
+        listView.adapter = CustomAdapter(this, errors)
+
     }
 
     private fun replay() {

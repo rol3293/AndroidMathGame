@@ -10,7 +10,7 @@
         android:id="@+id/result_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,10 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/error_listview"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answeredQuestionsText" />
+        app:layout_constraintTop_toBottomOf="@+id/answeredQuestionsText"
+        app:layout_constraintVertical_bias="0.6" />
 
     <ListView
         android:id="@+id/error_listview"
@@ -36,7 +36,6 @@
         android:layout_marginTop="80dp"
         android:layout_marginBottom="10dp"
         android:fadeScrollbars="false"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/replayBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -44,29 +43,6 @@
         app:layout_constraintTop_toBottomOf="@+id/result_textview">
 
     </ListView>
-
-    <TextView
-        android:id="@+id/congrats_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/congrats_text"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correct_image" />
-
-    <ImageView
-        android:id="@+id/correct_image"
-        android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:contentDescription="@string/correct_image_desc"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39"
-        app:srcCompat="@drawable/correct" />
 
     <TextView
         android:id="@+id/answeredQuestionsText"
